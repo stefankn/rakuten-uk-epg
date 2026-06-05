@@ -88,7 +88,7 @@ Make the channels and programmes into something readable by XMLTV
 
 days = get_days()
 
-url_string = (f"classification_id=18&device_identifier=web"
+url_string = (f"classification_id=323&device_identifier=web"
               f"&device_stream_audio_quality=2.0&device_stream_hdr_type=NONE&device_stream_video_quality=FHD"
               f"&epg_duration_minutes=360"
               f"&epg_ends_at={days[-1].strftime('%Y-%m-%dT%H:%M:%S.000Z')}"
