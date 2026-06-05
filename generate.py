@@ -100,7 +100,12 @@ url_string = (f"classification_id=323&device_identifier=web"
 
 url = "https://gizmo.rakuten.tv/v3/live_channels?" + url_string.replace(":", "%3A")
 print("Grabbing data")
-res = requests.get(url)
+headers = {
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:98.0) Gecko/20100101 Firefox/98.0",
+    "Origin": "https://rakuten.tv",
+    "Referer": "https://rakuten.tv/"
+}
+res = requests.get(url, headers=headers)
 if res.status_code != 200:
     raise ConnectionError(f"HTTP{res.status_code}: could not get info from server!")
 print("Loading JSON")
