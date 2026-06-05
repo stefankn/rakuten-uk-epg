@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, time, timezone
 import pytz
 import unicodedata
 
-tz = pytz.timezone('Europe/London')
+tz = pytz.timezone('Europe/Amsterdam')
 
 
 # From https://stackoverflow.com/questions/4324790/removing-control-characters-from-a-string-in-python
@@ -95,7 +95,7 @@ url_string = (f"classification_id=18&device_identifier=web"
               f"&epg_ends_at_timestamp={days[-1].timestamp()}"
               f"&epg_starts_at={days[0].strftime('%Y-%m-%dT%H:%M:%S.000Z')}"
               f"&epg_starts_at_timestamp={days[0].timestamp()}"
-              f"&locale=en&market_code=uk"
+              f"&locale=en&market_code=nl"
               f"&per_page=250")
 
 url = "https://gizmo.rakuten.tv/v3/live_channels?" + url_string.replace(":", "%3A")
