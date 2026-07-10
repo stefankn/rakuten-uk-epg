@@ -7,5 +7,6 @@ URL=$(streamlink --twitch-disable-ads --stream-url $CHANNEL_URL best)
 
 if [ -n "$URL" ]; then
 	echo "#EXTM3U" > "$OUTPUT_FILE"
+	echo "#EXT-X-STREAM-INF:BANDWIDTH=5000000" >> "$OUTPUT_FILE"
 	echo "$URL" >> "$OUTPUT_FILE"
 fi
