@@ -96,7 +96,7 @@ url_string = (f"classification_id=323&device_identifier=web"
               f"&epg_starts_at={days[0].strftime('%Y-%m-%dT%H:%M:%S.000Z')}"
               f"&epg_starts_at_timestamp={days[0].timestamp()}"
               f"&locale=en&market_code=nl"
-              f"&per_page=250")
+              f"&per_page=50")
 
 url = "https://gizmo.rakuten.tv/v3/live_channels?" + url_string.replace(":", "%3A")
 print(url)
@@ -108,11 +108,19 @@ headers = {
     "Accept": "*/*",
     "Accept-Encoding": "identity",
 }
-res = requests.get(url, headers=headers)
-if res.status_code != 200:
-    raise ConnectionError(f"HTTP{res.status_code}: could not get info from server!")
-print("Loading JSON")
-json = res.json()['data']
+# The API rejects per_page values above ~50, so fetch all pages
+json = []
+page = 1
+while True:
+    res = requests.get(f"{url}&page={page}", headers=headers)
+    if res.status_code != 200:
+        raise ConnectionError(f"HTTP{res.status_code}: could not get info from server! {res.text}")
+    body = res.json()
+    json.extend(body['data'])
+    total_pages = body.get('meta', {}).get('pagination', {}).get('total_pages', 1)
+    if page >= total_pages:
+        break
+    page += 1
 print(f"\nRetrieved {len(json)} channels:")
 
 channels_data = []
